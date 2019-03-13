@@ -141,7 +141,7 @@ require (
 	golang.org/x/time v0.0.0-20190104202802-85acf8d2951c
 	golang.org/x/tools v0.0.0-20190110211028-68c5ac90f574
 	google.golang.org/api v0.1.0 // indirect
-	google.golang.org/genproto v0.0.0-20190215211957-bd968387e4aa // indirect
+	google.golang.org/genproto v0.0.0-20190313131115-5fe7a883aa19 // indirect
 	google.golang.org/grpc v1.18.0 // indirect
 	gopkg.in/alexcesaro/statsd.v2 v2.0.0 // indirect
 	gopkg.in/inconshreveable/log15.v2 v2.0.0-20180818164646-67afb5ed74ec
