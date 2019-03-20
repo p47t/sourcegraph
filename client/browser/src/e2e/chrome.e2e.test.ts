@@ -1,6 +1,6 @@
 import * as path from 'path'
 import puppeteer from 'puppeteer'
-import { ensureLoggedIn, readEnvString } from '../../../../shared/src/util/e2e-test-utils'
+import { readEnvString } from '../../../../shared/src/util/e2e-test-utils'
 import { saveScreenshotsUponFailuresAndClosePage } from '../../../../shared/src/util/screenshotReporter'
 
 const chromeExtensionPath = path.resolve(__dirname, '..', '..', 'build/chrome')
@@ -51,6 +51,35 @@ async function clickElement(page: puppeteer.Page, element: puppeteer.ElementHand
 describe('Sourcegraph Chrome extension', () => {
     let browser: puppeteer.Browser
     let page: puppeteer.Page
+
+    async function ensureLoggedIn({
+        page,
+        baseURL,
+        email = 'test@test.com',
+        username = 'test',
+        password = 'test',
+    }: {
+        page: puppeteer.Page
+        baseURL: string
+        email?: string
+        username?: string
+        password?: string
+    }): Promise<void> {
+        await page.goto(baseURL)
+        const url = new URL(await page.url())
+        if (url.pathname === '/site-admin/init') {
+            await page.type('input[name=email]', email)
+            await page.type('input[name=username]', username)
+            await page.type('input[name=password]', password)
+            await page.click('button[type=submit]')
+            await page.waitForNavigation()
+        } else if (url.pathname === '/sign-in') {
+            await page.type('input', username)
+            await page.type('input[name=password]', password)
+            await page.click('button[type=submit]')
+            await page.waitForNavigation()
+        }
+    }
 
     // Open browser.
     beforeAll(

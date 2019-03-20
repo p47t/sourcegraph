@@ -53,37 +53,3 @@ export function readEnvString({ variable, defaultValue }: { variable: string; de
     }
     return value
 }
-
-export async function ensureLoggedIn({
-    page,
-    baseURL,
-    email = 'test@test.com',
-    username = 'test',
-    password = 'test',
-}: {
-    page: puppeteer.Page
-    baseURL: string
-    email?: string
-    username?: string
-    password?: string
-}): Promise<void> {
-    await page.goto(baseURL)
-    await page.evaluate(() => {
-        localStorage.setItem('has-dismissed-browser-ext-toast', 'true')
-        localStorage.setItem('has-dismissed-integrations-toast', 'true')
-        localStorage.setItem('has-dismissed-survey-toast', 'true')
-    })
-    const url = new URL(await page.url())
-    if (url.pathname === '/site-admin/init') {
-        await page.type('input[name=email]', email)
-        await page.type('input[name=username]', username)
-        await page.type('input[name=password]', password)
-        await page.click('button[type=submit]')
-        await page.waitForNavigation()
-    } else if (url.pathname === '/sign-in') {
-        await page.type('input', username)
-        await page.type('input[name=password]', password)
-        await page.click('button[type=submit]')
-        await page.waitForNavigation()
-    }
-}
