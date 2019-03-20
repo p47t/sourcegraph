@@ -1,5 +1,4 @@
 import pRetry from 'p-retry'
-import puppeteer from 'puppeteer'
 import { OperationOptions } from 'retry'
 
 /**
