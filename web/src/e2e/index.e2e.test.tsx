@@ -3,8 +3,8 @@ import * as os from 'os'
 import * as path from 'path'
 import puppeteer, { LaunchOptions } from 'puppeteer'
 import { Key } from 'ts-key-enum'
+import { readEnvBoolean, readEnvString, retry } from '../../../shared/src/util/e2e-test-utils'
 import { saveScreenshotsUponFailuresAndClosePage } from '../../../shared/src/util/screenshotReporter'
-import { readEnvBoolean, readEnvString, retry } from '../util/e2e-test-utils'
 
 // 1 minute test timeout. This must be greater than the default Puppeteer
 // command timeout of 30s in order to get the stack trace to point to the
